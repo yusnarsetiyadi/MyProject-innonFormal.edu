@@ -1,0 +1,1113 @@
+openapi: 3.0.0
+info:
+  description: |
+    Open API document for InNon-Formal.edu App Project
+  version: "1.0.0"
+  title: InNon-Formal.edu App Project
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license: 
+    name: Apache 2.0 
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: Base URL Server AWS
+    url: http://192.168.10.1:8080
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/YUSNARSETIYADI150403_1/InNon-Formal.edu-App-Project/1.0.0
+  - description: Domain
+    url: https://example.my.id
+    variables:
+      environment:
+        default: dev
+        enum:
+          - "dev"
+          - "prod"
+tags:
+  - name: Auth
+    description:  Manage fitur Auth
+  - name: Admin
+    description:  Manage fitur Admin
+  - name: User
+    description: Manage fitur User  
+  - name: Class
+    description:  Manage fitur Class
+  - name: Join-Class
+    description:  Manage fitur Join-Class
+  - name: Raport
+    description: Manage Fitur Raport
+  - name: Feedback
+    description: Manage Fitur Feedback
+
+
+paths:
+
+### Endpoint Auth
+  /login:
+    post:
+      summary: "Login Admin or User"
+      tags:
+      - "Auth"
+      requestBody:
+        required: true
+        content:
+          "application/json":
+            schema:
+              type: object
+              properties:
+                "email":
+                  type: string
+                "password":
+                  type: string
+            example:
+              email: "budi123@gmail.com"
+              password: "123"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                status: "Success"
+                message: "Login Success"
+                data:
+                  id: 1
+                  name: "Budiman"
+                  email: "budi123@gmail.com"
+                  role: "Admin"
+                  agency_code: "123"
+                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzAwMzYwMjcsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoxfQ.pT-FmSraUUb8HY73ofYbbt3vFgbej0XaHP9VMas8Q44"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"   
+
+### Endpoint Admin
+  /admins:
+    post:
+      tags:
+        - Admin
+      summary: "Create Admin" 
+      description: "Register Admin with Agency Code and Role = Admin."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InsertAdminObject"
+            example:
+              name: "Budiman"
+              gender: "laki-laki"
+              address: "tangerang"
+              email: "budi123@gmail.com"
+              password: "123"
+              image: "image.jpg"
+              agency_code: 123
+      responses:
+        '201':
+          description: "Success Create Admin"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "Admin successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    get:
+      tags:
+        - Admin
+      summary: "Get detail admin profile"
+      description: "view detail admin profile who is currently logged in"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: admin profile detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success get detail admin profile"
+                  data:
+                    id: 1
+                    name: "Budiman"
+                    gender: "laki-laki"
+                    address: "tangerang"
+                    email: "budi123@gmail.com"
+                    password: "*****"
+                    image: "image.jpg"
+                    role: "Admin"
+                    agency_code: 123
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - Admin
+      summary: "Update Admin profile"
+      description: "Update Admin profile who is currently logged in"
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditAdminObject"
+            example:
+              name: "Budiman"
+              gender: "laki-laki"
+              address: "tangerang"
+              email: "budi123@gmail.com"
+              password: "*****"
+              image: "image.jpg"
+              agency_code: 123
+      responses:
+        '200':
+          description: "Success update Admin"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update Admin."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Admin
+      summary: "Delete Admin"
+      description: "Delete Admin who is currently logged in"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: "Success Delete Admin."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete admin"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+### Endpoint User
+  /users:
+    post:
+      tags:
+        - User
+      summary: "Create User" 
+      description: "Register User with Agency Code and Role = User."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InsertUserObject"
+            example:
+              name: "Budiman"
+              gender: "laki-laki"
+              address: "tangerang"
+              email: "budi123@gmail.com"
+              password: "123"
+              agency_code: 123
+      responses:
+        '201':
+          description: "Success Create User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "User successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    get:
+      tags:
+        - User
+      summary: "Get user admin profile"
+      description: "view detail user profile who is currently logged in"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: user profile detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success get detail user profile"
+                  data:
+                    id: 1
+                    name: "Budiman"
+                    gender: "laki-laki"
+                    address: "tangerang"
+                    email: "budi123@gmail.com"
+                    password: "*****"
+                    role: "User"
+                    agency_code: 123
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - User
+      summary: "Update User profile"
+      description: "Update User profile who is currently logged in"
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditUserObject"
+            example:
+              name: "Budiman"
+              gender: "laki-laki"
+              address: "tangerang"
+              email: "budi123@gmail.com"
+              password: "*****"
+              agency_code: 123
+      responses:
+        '200':
+          description: "Success update User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update User."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - User
+      summary: "Delete User"
+      description: "Delete User who is currently logged in"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: "Success Delete User."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete user"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+### Endpoint Class
+  /classes:
+    post:
+      tags:
+        - Class
+      summary: "Create Class Non-Formal or Informal" 
+      description: "Register Class Non-Formal or Informal with the same agency code as admin. (Only For Admin)"
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InsertClassObject"
+            example:
+              name: "Backend Engineer"
+              teacher: "Fakhry Ikhsan Firdaus"
+      responses:
+        '201':
+          description: "Success Create Class"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "Class successfully created by admin" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    get:
+      tags:
+        - Class
+      summary: "Get a list of class"
+      description: "get class list according to agency code (For All)"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: a list of class
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success get all class"
+                  data:
+                    - id: 1
+                      name: "Backend Engineer"
+                      teacher: "Fakhry Ikhsan Firdaus"
+                      admin: 
+                        id: 1
+                        name: "Budiman"
+                        agency_code: 123
+                    - id: 2
+                      name: "Frontend Engineer"
+                      teacher: "Bagas Dhitya Taufiqqi"
+                      admin: 
+                        id: 1
+                        name: "Budiman"
+                        agency_code: 123
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /classes/{id}:
+    get:
+      tags:
+        - Class
+      summary: "Get class detail"
+      description: "get class detail with id param and according to agency code (For All)"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id class to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id class 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: class detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success get class detail"
+                  data:
+                    id: 1
+                    name: "Backend Engineer"
+                    teacher: "Fakhry Ikhsan Firdaus"
+                    admin: 
+                      id: 1
+                      name: "Budiman"
+                      agency_code: 123
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - Class
+      summary: "Update class data"
+      description: "Update class data with id param and the same agency code as admin. (Only For Admin)"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id class to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id class 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditClassObject"
+            example:
+              name: "Backend Engineer"
+              teacher: "Fakhry Ikhsan Firdaus"
+      responses:
+        '200':
+          description: "Success update Class"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update Class."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Class
+      summary: "Delete Class"
+      description: "Delete Class Non-Formal or Informal with id param and the same agency code as admin. (Only For Admin)"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id class to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id class 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete Class."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete Class"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+### Endpoint Join-Class
+  /join-classes:
+    post:
+      tags:
+        - Join-Class
+      summary: "Join Class Non-Formal or Informal" 
+      description: "Register to Join Class Non-Formal or Informal with the same agency code as user. (Only For User)"
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InsertJoinClassObject"
+            example:
+              class_id: 1
+              join_date: "19 December 2022"
+              purpose_follow: "want to add insight about the backend engineer"
+              interest_talent: "design adn art"
+      responses:
+        '201':
+          description: "Success Create data join-class"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "successfully Join-Class" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    get:
+      tags:
+        - Join-Class
+      summary: "Get a list of join-class/history join-class"
+      description: "get a list of join class for user who is currently logged in and according to agency code (Only For User)"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: a list of join-class/history join-class
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success get history join-class"
+                  data:
+                    - id: 1
+                      class_id: 1
+                      join_date: "19 December 2022"
+                    - id: 2
+                      class_id: 2
+                      join_date: "22 December 2022"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /join-classes/{id}:
+    delete:
+      tags:
+        - Join-Class
+      summary: "Delete Join-Class Non-Formal or Informal"
+      description: "Delete Join-Class Non-Formal or Informal with id param and the same agency code as user. (Only For User)"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id join-class to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id join-class 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete Join-Class."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete Class and have Leave Class"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+### Endpoint Raport
+  /raports:
+    post:
+      tags:
+        - Raport
+      summary: "Create Raport for 1 user" 
+      description: "Create Raport for 1 user with the same agency code as admin. (Only For Admin)"
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InsertRaportObject"
+            example:
+              user_id: 1
+              mark: 80
+              status: "process of determining interests and talents"
+              comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+      responses:
+        '201':
+          description: "Success Create Raport"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "Raport successfully created by admin" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - Raport
+      summary: "Update raport data for 1 user"
+      description: "Update raport data for 1 user with id param and the same agency code as admin. (Only For Admin)"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditRaportObject"
+            example:
+              mark: 80
+              status: "process of determining interests and talents"
+              comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+      responses:
+        '200':
+          description: "Success update raport data"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update raport data for 1 user."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /raports/admins:
+    get:
+      tags:
+        - Raport
+      summary: "Get a list of raport for admin"
+      description: "get raport list for admin who is currently logged in and according to agency code (Only For Admin)"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: a list of raport by admin who is currently logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success get all raport"
+                  data:
+                    - user:
+                        id: 1
+                        name: adi
+                      mark: 80
+                      status: "process of determining interests and talents"
+                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+                    - user:
+                        id: 2
+                        name: budi
+                      mark: 80
+                      status: "process of determining interests and talents"
+                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /raports/users:
+    get:
+      tags:
+        - Raport
+      summary: "Get a list of raport for user"
+      description: "get a list of raport for user who is currently logged in dan according to agency code (For User)"
+      security:
+        - JWTAuth: []
+      responses:
+        '200':
+          description: a list of raport by user who is currently logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success get a list of raport"
+                  data:
+                    - mark: 80
+                      status: "process of determining interests and talents"
+                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+                      admin: 
+                        id: 1
+                        name: Budiman
+                        agency_code: 123
+                    - mark: 100
+                      status: "process of determining interests and talents"
+                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+                      admin: 
+                        id: 2
+                        name: Setiyadi
+                        agency_code: 123
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+### Endpoint Feedback
+  /feedbacks:
+    post:
+      tags:
+        - Feedback
+      summary: "Create Feedback" 
+      description: "Create New Feedback for class"
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InsertFeedbackObject"
+            example:
+              class_id: 1
+              rating: "*****"
+              feedback: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum convallis tortor eget scelerisque. Sed diam risus, tincidunt at lacinia a, hendrerit at massa. Maecenas tincidunt convallis rhoncus. Maecenas augue tellus, interdum non nulla a, bibendum dapibus nulla. Nullam at lorem diam. Integer nec urna commodo, gravida est fringilla, ultricies velit. Suspendisse potenti."
+      responses:
+        '201':
+          description: "Success create data"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "Success add feedback"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+
+####################################
+#  COMPONENTS
+####################################
+components:
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT Token that generate after login."
+
+  schemas:
+
+### Admin Schemas
+    "InsertAdminObject":
+      type: object
+      properties:
+        "name":
+          type: string
+        "gender":
+          type: string
+        "address":
+          type: string
+        "email":
+          type: string
+        "password":
+          type: string    
+        "image":
+          type: string
+    "EditAdminObject":
+      type: object
+      properties:
+        "name":
+          type: string
+        "gender":
+          type: string
+        "address":
+          type: string
+        "email":
+          type: string
+        "password":
+          type: string    
+        "image":
+          type: string
+
+### User Schemas
+    "InsertUserObject":
+      type: object
+      properties:
+        "name":
+          type: string
+        "gender":
+          type: string
+        "address":
+          type: string
+        "email":
+          type: string
+        "password":
+          type: string        
+    "EditUserObject":
+      type: object
+      properties:
+        "name":
+          type: string
+        "gender":
+          type: string
+        "address":
+          type: string
+        "email":
+          type: string
+        "password":
+          type: string    
+
+### Class Schemas
+    "InsertClassObject":
+      type: object
+      properties:
+        "name":
+          type: integer
+        "teacehr":
+          type: string
+        "admin_id":
+          type: string 
+    "EditClassObject":
+      type: object
+      properties:
+        "name":
+          type: integer
+        "teacehr":
+          type: string
+        "admin_id":
+          type: string       
+
+### Join-Class Schemas
+    "InsertJoinClassObject":
+      type: object
+      properties:
+        "class_id":
+          type: integer
+        "join_date":
+          type: string
+        "purpose_follow":
+          type: string 
+        "interest_talent":
+          type: string 
+     
+### Raport Schemas
+    "InsertRaportObject":
+      type: object
+      properties:
+        "mark":
+          type: integer
+        "status":
+          type: string
+        "comment":
+          type: string 
+    "EditRaportObject":
+      type: object
+      properties:
+        "mark":
+          type: integer
+        "status":
+          type: string
+        "comment":
+          type: string 
+        
+### Feedbacks Schemas
+    "InsertFeedbackObject":
+      type: object
+      properties:
+        "rating":
+          type: string
+        "feedback":
+          type: string
+        "class_id":
+          type: string        
+
+### Other Schemas
+    "ResponseWithoutData":
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    "ResponseWithData":
+      type: object
+      properties:
+        status:
+          type: string
+        message: 
+          type: string
+        data:
+          type: object
+
+### Responses Schemas
+  responses:
+    '200':
+      description: "Success Process Data"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message: 
+                type: string
+              data:
+                type: object
+    '201':
+      description: "Success Create Data"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message: 
+                type: string
+              data:
+                type: object
+    '400':
+      description: "Wrong Request From User"
+      content:
+        "application/json":
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: "Process Failed. Please check your input."
+    '401':
+      description: "Authorization information is missing or invalid."
+      content:
+        "application/json":
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: "Process Failed. User not authorized for this request."
+    '404':
+      description: "Page not found or wrong url. Please check again."
+      content:
+        "application/json":
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: "Process Failed. User not authorized for this request."
+    '500':
+      description: "Error process on server"
+      content:
+        "application/json":
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: "Process Failed. Please check server."
