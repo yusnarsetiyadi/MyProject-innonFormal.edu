@@ -3,7 +3,7 @@ info:
   description: |
     Open API document for InNon-Formal.edu App Project
   version: "1.0.0"
-  title: InNon-Formal.edu App Project
+  title: InNon-Formal.edu
   termsOfService: 'http://swagger.io/terms/'
   contact:
     email: apiteam@swagger.io
@@ -27,10 +27,14 @@ servers:
 tags:
   - name: Auth
     description:  Manage fitur Auth
-  - name: Admin
-    description:  Manage fitur Admin
-  - name: User
-    description: Manage fitur User  
+  - name: Super-Admin
+    description:  Manage fitur Super-Admin
+  - name: School-Aministrator
+    description: Manage fitur School_Administrator
+  - name: Teacher
+    description: Manage fitur Teacher
+  - name: Student
+    description: Manage fitur Student
   - name: Class
     description:  Manage fitur Class
   - name: Join-Class
@@ -39,6 +43,8 @@ tags:
     description: Manage Fitur Raport
   - name: Feedback
     description: Manage Fitur Feedback
+  - name: Contact
+    description: Manage Fitur Contact  
 
 
 paths:
@@ -46,7 +52,8 @@ paths:
 ### Endpoint Auth
   /login:
     post:
-      summary: "Login Admin or User"
+      summary: "Login"
+      description: "Login for Super-Admin/School-Administrator/Teacher/Student"
       tags:
       - "Auth"
       requestBody:
@@ -78,8 +85,10 @@ paths:
                   name: "Budiman"
                   email: "budi123@gmail.com"
                   role: "Admin"
+                  user_role_id: 1
                   agency_code: "123"
                   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2NzAwMzYwMjcsInJvbGUiOiJ1c2VyIiwidXNlcklkIjoxfQ.pT-FmSraUUb8HY73ofYbbt3vFgbej0XaHP9VMas8Q44"
+
         "400" :
           $ref : "#/components/responses/400"  
         "404" :
@@ -87,73 +96,31 @@ paths:
         '500':
           $ref: "#/components/responses/500"   
 
-### Endpoint Admin
-  /admins:
-    post:
-      tags:
-        - Admin
-      summary: "Create Admin" 
-      description: "Register Admin with Agency Code and Role = Admin."
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/InsertAdminObject"
-            example:
-              name: "Budiman"
-              gender: "laki-laki"
-              address: "tangerang"
-              email: "budi123@gmail.com"
-              password: "123"
-              image: "image.jpg"
-              agency_code: 123
-      responses:
-        '201':
-          description: "Success Create Admin"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithoutData"
-              example:
-                status: "Success"
-                message: "Admin successfully created" 
-        "400" :
-          $ref : "#/components/responses/400"  
-        "401" :
-          $ref : "#/components/responses/401"  
-        "404" :
-          $ref : "#/components/responses/404"  
-        '500':
-          $ref: "#/components/responses/500"
-
+### Endpoint Super-Admin
+  /super-admins:
     get:
       tags:
-        - Admin
-      summary: "Get detail admin profile"
-      description: "view detail admin profile who is currently logged in"
+        - Super-Admin
+      summary: "Get detail one super admin"
       security:
         - JWTAuth: []
       responses:
         '200':
-          description: admin profile detail
+          description: super admin profile
           content:
             application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithData"
+              # schema:
+              #   $ref: "#/components/schemas/ResponseWithData"
               example:
                   status: "Success"
-                  message: "Success get detail admin profile"
+                  message: "Success get detail super admin profile"
                   data:
                     id: 1
                     name: "Budiman"
-                    gender: "laki-laki"
-                    address: "tangerang"
                     email: "budi123@gmail.com"
                     password: "*****"
                     image: "image.jpg"
-                    role: "Admin"
-                    agency_code: 123
+                    role: "Super-Admin"
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -165,25 +132,21 @@ paths:
 
     put:
       tags:
-        - Admin
-      summary: "Update Admin profile"
-      description: "Update Admin profile who is currently logged in"
+        - Super-Admin
+      summary: "Update one super admin profile"
       security:
         - JWTAuth: []
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/EditAdminObject"
+            # schema:
+            #   $ref: "#/components/schemas/EditAdminObject"
             example:
               name: "Budiman"
-              gender: "laki-laki"
-              address: "tangerang"
               email: "budi123@gmail.com"
               password: "*****"
               image: "image.jpg"
-              agency_code: 123
       responses:
         '200':
           description: "Success update Admin"
@@ -193,33 +156,7 @@ paths:
                 $ref: "#/components/schemas/ResponseWithoutData" 
               example:
                   status: "Success"
-                  message: "Success Update Admin."
-        "400" :
-          $ref : "#/components/responses/400"  
-        "401" :
-          $ref : "#/components/responses/401"  
-        "404" :
-          $ref : "#/components/responses/404"  
-        '500':
-          $ref: "#/components/responses/500"
-
-    delete:
-      tags:
-        - Admin
-      summary: "Delete Admin"
-      description: "Delete Admin who is currently logged in"
-      security:
-        - JWTAuth: []
-      responses:
-        '200':
-          description: "Success Delete Admin."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithoutData" 
-              example:
-                status: "Success"
-                message: "Success Delete admin"
+                  message: "Success Update Super Admin Profile."
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
