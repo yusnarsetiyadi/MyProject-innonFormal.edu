@@ -1,0 +1,2 @@
+# Overview
+innonFormal.edu App is my new application project which enables its users to manage non-formal or informal class data in a formal school. why did I make this application? I want to realize Indonesia's goal of "Educating the nation's life", as we know there are still many Indonesian people who do not have special expertise in one field, so what is on their mind is only looking for work without having expertise.
