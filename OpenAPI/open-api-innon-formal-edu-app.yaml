@@ -29,8 +29,8 @@ tags:
     description:  Manage fitur Auth
   - name: Super-Admin
     description:  Manage fitur Super-Admin
-  - name: School-Aministrator
-    description: Manage fitur School_Administrator
+  - name: School-Administrator
+    description: Manage fitur School-Administrator
   - name: Teacher
     description: Manage fitur Teacher
   - name: Student
@@ -43,8 +43,8 @@ tags:
     description: Manage Fitur Raport
   - name: Feedback
     description: Manage Fitur Feedback
-  - name: Contact
-    description: Manage Fitur Contact  
+  - name: Contract
+    description: Manage Fitur Contract  
 
 
 paths:
@@ -96,97 +96,26 @@ paths:
         '500':
           $ref: "#/components/responses/500"   
 
+
 ### Endpoint Super-Admin
   /super-admins:
-    get:
+    post:
       tags:
         - Super-Admin
-      summary: "Get detail one super admin"
-      security:
-        - JWTAuth: []
-      responses:
-        '200':
-          description: super admin profile
-          content:
-            application/json:
-              # schema:
-              #   $ref: "#/components/schemas/ResponseWithData"
-              example:
-                  status: "Success"
-                  message: "Success get detail super admin profile"
-                  data:
-                    id: 1
-                    name: "Budiman"
-                    email: "budi123@gmail.com"
-                    password: "*****"
-                    image: "image.jpg"
-                    role: "Super-Admin"
-        "400" :
-          $ref : "#/components/responses/400"  
-        "401" :
-          $ref : "#/components/responses/401"  
-        "404" :
-          $ref : "#/components/responses/404"  
-        '500':
-          $ref: "#/components/responses/500"
-
-    put:
-      tags:
-        - Super-Admin
-      summary: "Update one super admin profile"
-      security:
-        - JWTAuth: []
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
       requestBody:
         required: true
         content:
           application/json:
             # schema:
-            #   $ref: "#/components/schemas/EditAdminObject"
+              # $ref: "#/components/schemas/InsertUserObject"
             example:
-              name: "Budiman"
-              email: "budi123@gmail.com"
-              password: "*****"
-              image: "image.jpg"
-      responses:
-        '200':
-          description: "Success update Admin"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithoutData" 
-              example:
-                  status: "Success"
-                  message: "Success Update Super Admin Profile."
-        "400" :
-          $ref : "#/components/responses/400"  
-        "401" :
-          $ref : "#/components/responses/401"  
-        "404" :
-          $ref : "#/components/responses/404"  
-        '500':
-          $ref: "#/components/responses/500"
-
-
-### Endpoint User
-  /users:
-    post:
-      tags:
-        - User
-      summary: "Create User" 
-      description: "Register User with Agency Code and Role = User."
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/InsertUserObject"
-            example:
-              name: "Budiman"
-              gender: "laki-laki"
-              address: "tangerang"
+              full_name: "Budiman"
               email: "budi123@gmail.com"
               password: "123"
-              agency_code: 123
+              team: "Academic"
+              status: "Active" 
       responses:
         '201':
           description: "Success Create User"
@@ -205,33 +134,51 @@ paths:
           $ref : "#/components/responses/404"  
         '500':
           $ref: "#/components/responses/500"
-
     get:
       tags:
-        - User
-      summary: "Get user admin profile"
-      description: "view detail user profile who is currently logged in"
+        - Super-Admin
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
       security:
         - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
       responses:
         '200':
-          description: user profile detail
+          description: A list of users
           content:
             application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithData"
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
               example:
                   status: "Success"
-                  message: "Success get detail user profile"
+                  message: "Success get all users"
                   data:
-                    id: 1
-                    name: "Budiman"
-                    gender: "laki-laki"
-                    address: "tangerang"
-                    email: "budi123@gmail.com"
-                    password: "*****"
-                    role: "User"
-                    agency_code: 123
+                    - id: 1
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
+                    - id: 2
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -241,26 +188,76 @@ paths:
         '500':
           $ref: "#/components/responses/500"
 
-    put:
+  /super-admins/{id}:
+    get:
       tags:
-        - User
-      summary: "Update User profile"
-      description: "Update User profile who is currently logged in"
+        - Super-Admin
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
       security:
         - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Super-Admin
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/EditUserObject"
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
             example:
-              name: "Budiman"
-              gender: "laki-laki"
-              address: "tangerang"
+              full_name: "Budiman"
               email: "budi123@gmail.com"
-              password: "*****"
-              agency_code: 123
+              password: "123"
+              team: "Academic"
+              status: "Active" 
       responses:
         '200':
           description: "Success update User"
@@ -270,7 +267,7 @@ paths:
                 $ref: "#/components/schemas/ResponseWithoutData" 
               example:
                   status: "Success"
-                  message: "Success Update User."
+                  message: "Success Update user."
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -282,11 +279,668 @@ paths:
 
     delete:
       tags:
-        - User
-      summary: "Delete User"
-      description: "Delete User who is currently logged in"
+        - Super-Admin
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
       security:
         - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete User."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete user"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+### Endpoint School-Administrator
+  /school-administrators:
+    post:
+      tags:
+        - School-Administrator
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '201':
+          description: "Success Create User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "User successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - School-Administrator
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
+              example:
+                  status: "Success"
+                  message: "Success get all users"
+                  data:
+                    - id: 1
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
+                    - id: 2
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /school-administrators/{id}:
+    get:
+      tags:
+        - School-Administrator
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - School-Administrator
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '200':
+          description: "Success update User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update user."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - School-Administrator
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete User."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete user"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+# Endpoint Teacher
+  /teachers:
+    post:
+      tags:
+        - Teacher
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '201':
+          description: "Success Create User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "User successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - Teacher
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
+              example:
+                  status: "Success"
+                  message: "Success get all users"
+                  data:
+                    - id: 1
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
+                    - id: 2
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /teachers/{id}:
+    get:
+      tags:
+        - Teacher
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Teacher
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '200':
+          description: "Success update User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update user."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Teacher
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete User."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete user"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+# Endpoint Student
+  /students:
+    post:
+      tags:
+        - Student
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '201':
+          description: "Success Create User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "User successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - Student
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
+              example:
+                  status: "Success"
+                  message: "Success get all users"
+                  data:
+                    - id: 1
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
+                    - id: 2
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /students/{id}:
+    get:
+      tags:
+        - Student
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Student
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '200':
+          description: "Success update User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update user."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Student
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
       responses:
         '200':
           description: "Success Delete User."
@@ -312,29 +966,30 @@ paths:
     post:
       tags:
         - Class
-      summary: "Create Class Non-Formal or Informal" 
-      description: "Register Class Non-Formal or Informal with the same agency code as admin. (Only For Admin)"
-      security:
-        - JWTAuth: []
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/InsertClassObject"
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
             example:
-              name: "Backend Engineer"
-              teacher: "Fakhry Ikhsan Firdaus"
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
       responses:
         '201':
-          description: "Success Create Class"
+          description: "Success Create User"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData"
               example:
                 status: "Success"
-                message: "Class successfully created by admin" 
+                message: "User successfully created" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -343,39 +998,51 @@ paths:
           $ref : "#/components/responses/404"  
         '500':
           $ref: "#/components/responses/500"
-
     get:
       tags:
         - Class
-      summary: "Get a list of class"
-      description: "get class list according to agency code (For All)"
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
       security:
         - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
       responses:
         '200':
-          description: a list of class
+          description: A list of users
           content:
             application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithData"
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
               example:
                   status: "Success"
-                  message: "Success get all class"
+                  message: "Success get all users"
                   data:
                     - id: 1
-                      name: "Backend Engineer"
-                      teacher: "Fakhry Ikhsan Firdaus"
-                      admin: 
-                        id: 1
-                        name: "Budiman"
-                        agency_code: 123
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
                     - id: 2
-                      name: "Frontend Engineer"
-                      teacher: "Bagas Dhitya Taufiqqi"
-                      admin: 
-                        id: 1
-                        name: "Budiman"
-                        agency_code: 123
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -389,37 +1056,36 @@ paths:
     get:
       tags:
         - Class
-      summary: "Get class detail"
-      description: "get class detail with id param and according to agency code (For All)"
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
       security:
         - JWTAuth: []
       parameters:
         - name: id
-          description: "Id class to get data"
+          description: "Id user to get data"
           required: true
           in: path
           schema:
-            description: "Id class 1"
+            description: "Id user 1"
             type: integer
             example: 1
       responses:
         '200':
-          description: class detail
+          description: "Success Get User by Id"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithData"
               example:
                   status: "Success"
-                  message: "Success get class detail"
+                  message: "Success Get User by Id"
                   data:
                     id: 1
-                    name: "Backend Engineer"
-                    teacher: "Fakhry Ikhsan Firdaus"
-                    admin: 
-                      id: 1
-                      name: "Budiman"
-                      agency_code: 123
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -428,42 +1094,44 @@ paths:
           $ref : "#/components/responses/404"  
         '500':
           $ref: "#/components/responses/500"
-
     put:
       tags:
         - Class
-      summary: "Update class data"
-      description: "Update class data with id param and the same agency code as admin. (Only For Admin)"
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
       security:
         - JWTAuth: []
       parameters:
         - name: id
-          description: "Id class to get data"
+          description: "Id user to update data"
           required: true
           in: path
           schema:
-            description: "Id class 1"
+            description: "Id user 1"
             type: integer
             example: 1
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/EditClassObject"
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
             example:
-              name: "Backend Engineer"
-              teacher: "Fakhry Ikhsan Firdaus"
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
       responses:
         '200':
-          description: "Success update Class"
+          description: "Success update User"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData" 
               example:
                   status: "Success"
-                  message: "Success Update Class."
+                  message: "Success Update user."
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -476,29 +1144,29 @@ paths:
     delete:
       tags:
         - Class
-      summary: "Delete Class"
-      description: "Delete Class Non-Formal or Informal with id param and the same agency code as admin. (Only For Admin)"
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
       security:
         - JWTAuth: []
       parameters:
         - name: id
-          description: "Id class to get data"
+          description: "Id user to delete data."
           required: true
           in: path
           schema:
-            description: "Id class 1"
+            description: "Id user 1"
             type: integer
             example: 1
       responses:
         '200':
-          description: "Success Delete Class."
+          description: "Success Delete User."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData" 
               example:
                 status: "Success"
-                message: "Success Delete Class"
+                message: "Success Delete user"
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -514,31 +1182,30 @@ paths:
     post:
       tags:
         - Join-Class
-      summary: "Join Class Non-Formal or Informal" 
-      description: "Register to Join Class Non-Formal or Informal with the same agency code as user. (Only For User)"
-      security:
-        - JWTAuth: []
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/InsertJoinClassObject"
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
             example:
-              class_id: 1
-              join_date: "19 December 2022"
-              purpose_follow: "want to add insight about the backend engineer"
-              interest_talent: "design adn art"
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
       responses:
         '201':
-          description: "Success Create data join-class"
+          description: "Success Create User"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData"
               example:
                 status: "Success"
-                message: "successfully Join-Class" 
+                message: "User successfully created" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -547,31 +1214,51 @@ paths:
           $ref : "#/components/responses/404"  
         '500':
           $ref: "#/components/responses/500"
-
     get:
       tags:
         - Join-Class
-      summary: "Get a list of join-class/history join-class"
-      description: "get a list of join class for user who is currently logged in and according to agency code (Only For User)"
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
       security:
         - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
       responses:
         '200':
-          description: a list of join-class/history join-class
+          description: A list of users
           content:
             application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithData"
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
               example:
                   status: "Success"
-                  message: "Success get history join-class"
+                  message: "Success get all users"
                   data:
                     - id: 1
-                      class_id: 1
-                      join_date: "19 December 2022"
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
                     - id: 2
-                      class_id: 2
-                      join_date: "22 December 2022"
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -582,32 +1269,120 @@ paths:
           $ref: "#/components/responses/500"
 
   /join-classes/{id}:
-    delete:
+    get:
       tags:
         - Join-Class
-      summary: "Delete Join-Class Non-Formal or Informal"
-      description: "Delete Join-Class Non-Formal or Informal with id param and the same agency code as user. (Only For User)"
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
       security:
         - JWTAuth: []
       parameters:
         - name: id
-          description: "Id join-class to get data"
+          description: "Id user to get data"
           required: true
           in: path
           schema:
-            description: "Id join-class 1"
+            description: "Id user 1"
             type: integer
             example: 1
       responses:
         '200':
-          description: "Success Delete Join-Class."
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Join-Class
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '200':
+          description: "Success update User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update user."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Join-Class
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete User."
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData" 
               example:
                 status: "Success"
-                message: "Success Delete Class and have Leave Class"
+                message: "Success Delete user"
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -623,31 +1398,83 @@ paths:
     post:
       tags:
         - Raport
-      summary: "Create Raport for 1 user" 
-      description: "Create Raport for 1 user with the same agency code as admin. (Only For Admin)"
-      security:
-        - JWTAuth: []
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/InsertRaportObject"
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
             example:
-              user_id: 1
-              mark: 80
-              status: "process of determining interests and talents"
-              comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
       responses:
         '201':
-          description: "Success Create Raport"
+          description: "Success Create User"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData"
               example:
                 status: "Success"
-                message: "Raport successfully created by admin" 
+                message: "User successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - Raport
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
+              example:
+                  status: "Success"
+                  message: "Success get all users"
+                  data:
+                    - id: 1
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
+                    - id: 2
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -657,11 +1484,12 @@ paths:
         '500':
           $ref: "#/components/responses/500"
 
-    put:
+  /raports/{id}:
+    get:
       tags:
         - Raport
-      summary: "Update raport data for 1 user"
-      description: "Update raport data for 1 user with id param and the same agency code as admin. (Only For Admin)"
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
       security:
         - JWTAuth: []
       parameters:
@@ -673,26 +1501,69 @@ paths:
             description: "Id user 1"
             type: integer
             example: 1
+      responses:
+        '200':
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Raport
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/EditRaportObject"
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
             example:
-              mark: 80
-              status: "process of determining interests and talents"
-              comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
       responses:
         '200':
-          description: "Success update raport data"
+          description: "Success update User"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData" 
               example:
                   status: "Success"
-                  message: "Success Update raport data for 1 user."
+                  message: "Success Update user."
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -702,79 +1573,32 @@ paths:
         '500':
           $ref: "#/components/responses/500"
 
-  /raports/admins:
-    get:
+    delete:
       tags:
         - Raport
-      summary: "Get a list of raport for admin"
-      description: "get raport list for admin who is currently logged in and according to agency code (Only For Admin)"
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
       security:
         - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
       responses:
         '200':
-          description: a list of raport by admin who is currently logged in
+          description: "Success Delete User."
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ResponseWithData"
+                $ref: "#/components/schemas/ResponseWithoutData" 
               example:
-                  status: "Success"
-                  message: "Success get all raport"
-                  data:
-                    - user:
-                        id: 1
-                        name: adi
-                      mark: 80
-                      status: "process of determining interests and talents"
-                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
-                    - user:
-                        id: 2
-                        name: budi
-                      mark: 80
-                      status: "process of determining interests and talents"
-                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
-        "400" :
-          $ref : "#/components/responses/400"  
-        "401" :
-          $ref : "#/components/responses/401"  
-        "404" :
-          $ref : "#/components/responses/404"  
-        '500':
-          $ref: "#/components/responses/500"
-
-  /raports/users:
-    get:
-      tags:
-        - Raport
-      summary: "Get a list of raport for user"
-      description: "get a list of raport for user who is currently logged in dan according to agency code (For User)"
-      security:
-        - JWTAuth: []
-      responses:
-        '200':
-          description: a list of raport by user who is currently logged in
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ResponseWithData"
-              example:
-                  status: "Success"
-                  message: "Success get a list of raport"
-                  data:
-                    - mark: 80
-                      status: "process of determining interests and talents"
-                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
-                      admin: 
-                        id: 1
-                        name: Budiman
-                        agency_code: 123
-                    - mark: 100
-                      status: "process of determining interests and talents"
-                      comment: "come on, immediately determine your interests and talents so that you can be occupied from now on"
-                      admin: 
-                        id: 2
-                        name: Setiyadi
-                        agency_code: 123
+                status: "Success"
+                message: "Success Delete user"
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -790,30 +1614,83 @@ paths:
     post:
       tags:
         - Feedback
-      summary: "Create Feedback" 
-      description: "Create New Feedback for class"
-      security:
-        - JWTAuth: []
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
       requestBody:
         required: true
         content:
           application/json:
-            schema:
-              $ref: "#/components/schemas/InsertFeedbackObject"
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
             example:
-              class_id: 1
-              rating: "*****"
-              feedback: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum convallis tortor eget scelerisque. Sed diam risus, tincidunt at lacinia a, hendrerit at massa. Maecenas tincidunt convallis rhoncus. Maecenas augue tellus, interdum non nulla a, bibendum dapibus nulla. Nullam at lorem diam. Integer nec urna commodo, gravida est fringilla, ultricies velit. Suspendisse potenti."
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
       responses:
         '201':
-          description: "Success create data"
+          description: "Success Create User"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseWithoutData"
               example:
                 status: "Success"
-                message: "Success add feedback"
+                message: "User successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - Feedback
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
+              example:
+                  status: "Success"
+                  message: "Success get all users"
+                  data:
+                    - id: 1
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
+                    - id: 2
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
         "400" :
           $ref : "#/components/responses/400"  
         "401" :
@@ -823,6 +1700,345 @@ paths:
         '500':
           $ref: "#/components/responses/500"
 
+  /feedbacks/{id}:
+    get:
+      tags:
+        - Feedback
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Feedback
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '200':
+          description: "Success update User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update user."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Feedback
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete User."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete user"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+
+# Endpoint Contract
+  /contracts:
+    post:
+      tags:
+        - Contract
+      summary: "Coming soon Open API"
+      description: "Register User with Role = User."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+              # $ref: "#/components/schemas/InsertUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '201':
+          description: "Success Create User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData"
+              example:
+                status: "Success"
+                message: "User successfully created" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - Contract
+      summary: "Coming soon Open API"
+      description: "Get all users and can use query parameter to search. Input using lowercase"
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: ""
+          description: "No value in parameter."
+          required: false
+          in: query
+          schema:
+            type: string
+            example: ""
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budiman"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              # schema:
+              #   $ref: "#/components/schemas/SuccesArrayUserResult"
+              example:
+                  status: "Success"
+                  message: "Success get all users"
+                  data:
+                    - id: 1
+                      full_name: "Budiman"
+                      email: "budi123@gmail.com"
+                      team: "Academic"
+                      role: "User"
+                      status: "Active" 
+                    - id: 2
+                      full_name: "Jasiman"
+                      email: "Jasiman123@gmail.com"
+                      team: "Academic"
+                      role: "Admin"
+                      status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+  /contracts/{id}:
+    get:
+      tags:
+        - Contract
+      summary: "Coming soon Open API"
+      description: "Get data user using id user at path parameter. Only return 1 data."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to get data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Get User by Id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithData"
+              example:
+                  status: "Success"
+                  message: "Success Get User by Id"
+                  data:
+                    id: 1
+                    full_name: "Jasiman"
+                    email: "Jasiman123@gmail.com"
+                    team: "Academic"
+                    role: "User"
+                    status: "Active" 
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Contract
+      summary: "Coming soon Open API"
+      description: "Update User using request body and using id for reference at path parameter."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to update data"
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            # schema:
+                # $ref: "#/components/schemas/EditUserObject"
+            example:
+              full_name: "Budiman"
+              email: "budi123@gmail.com"
+              password: "123"
+              team: "Academic"
+              status: "Active" 
+      responses:
+        '200':
+          description: "Success update User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                  status: "Success"
+                  message: "Success Update user."
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Contract
+      summary: "Coming soon Open API"
+      description: "Delete User using id at path parameter as reference."
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id
+          description: "Id user to delete data."
+          required: true
+          in: path
+          schema:
+            description: "Id user 1"
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Success Delete User."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutData" 
+              example:
+                status: "Success"
+                message: "Success Delete user"
+        "400" :
+          $ref : "#/components/responses/400"  
+        "401" :
+          $ref : "#/components/responses/401"  
+        "404" :
+          $ref : "#/components/responses/404"  
+        '500':
+          $ref: "#/components/responses/500"
 
 
 ####################################
@@ -837,130 +2053,6 @@ components:
       description: "JWT Token that generate after login."
 
   schemas:
-
-### Admin Schemas
-    "InsertAdminObject":
-      type: object
-      properties:
-        "name":
-          type: string
-        "gender":
-          type: string
-        "address":
-          type: string
-        "email":
-          type: string
-        "password":
-          type: string    
-        "image":
-          type: string
-    "EditAdminObject":
-      type: object
-      properties:
-        "name":
-          type: string
-        "gender":
-          type: string
-        "address":
-          type: string
-        "email":
-          type: string
-        "password":
-          type: string    
-        "image":
-          type: string
-
-### User Schemas
-    "InsertUserObject":
-      type: object
-      properties:
-        "name":
-          type: string
-        "gender":
-          type: string
-        "address":
-          type: string
-        "email":
-          type: string
-        "password":
-          type: string        
-    "EditUserObject":
-      type: object
-      properties:
-        "name":
-          type: string
-        "gender":
-          type: string
-        "address":
-          type: string
-        "email":
-          type: string
-        "password":
-          type: string    
-
-### Class Schemas
-    "InsertClassObject":
-      type: object
-      properties:
-        "name":
-          type: integer
-        "teacehr":
-          type: string
-        "admin_id":
-          type: string 
-    "EditClassObject":
-      type: object
-      properties:
-        "name":
-          type: integer
-        "teacehr":
-          type: string
-        "admin_id":
-          type: string       
-
-### Join-Class Schemas
-    "InsertJoinClassObject":
-      type: object
-      properties:
-        "class_id":
-          type: integer
-        "join_date":
-          type: string
-        "purpose_follow":
-          type: string 
-        "interest_talent":
-          type: string 
-     
-### Raport Schemas
-    "InsertRaportObject":
-      type: object
-      properties:
-        "mark":
-          type: integer
-        "status":
-          type: string
-        "comment":
-          type: string 
-    "EditRaportObject":
-      type: object
-      properties:
-        "mark":
-          type: integer
-        "status":
-          type: string
-        "comment":
-          type: string 
-        
-### Feedbacks Schemas
-    "InsertFeedbackObject":
-      type: object
-      properties:
-        "rating":
-          type: string
-        "feedback":
-          type: string
-        "class_id":
-          type: string        
 
 ### Other Schemas
     "ResponseWithoutData":
