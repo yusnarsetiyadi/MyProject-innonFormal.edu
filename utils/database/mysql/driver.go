@@ -22,11 +22,11 @@ func InitMySQLDB(cfg *config.AppConfig) *gorm.DB {
 		log.Fatal("Cannot connect to DB")
 	}
 
-	// migrateDB(db)
+	MigrateDB(db)
 
 	return db
 }
 
-// func migrateDB(db *gorm.DB){
+func MigrateDB(db *gorm.DB) {
 
-// }
+}
