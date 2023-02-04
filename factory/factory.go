@@ -21,6 +21,10 @@ import (
 	joinclassRepo "myproject/innonformaledu/features/joinclass/repository"
 	joinclassService "myproject/innonformaledu/features/joinclass/service"
 
+	raportDelivery "myproject/innonformaledu/features/raport/delivery"
+	raportRepo "myproject/innonformaledu/features/raport/repository"
+	raportService "myproject/innonformaledu/features/raport/service"
+
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -46,5 +50,9 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	joinclassRepoFactory := joinclassRepo.New(db)
 	joinclassServiceFactory := joinclassService.New(joinclassRepoFactory)
 	joinclassDelivery.New(joinclassServiceFactory, e)
+
+	raportRepoFactory := raportRepo.New(db)
+	raportServiceFactory := raportService.New(raportRepoFactory)
+	raportDelivery.New(raportServiceFactory, e)
 
 }
