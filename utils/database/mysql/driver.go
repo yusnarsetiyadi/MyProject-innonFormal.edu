@@ -5,6 +5,10 @@ import (
 	"log"
 	"myproject/innonformaledu/config"
 
+	class "myproject/innonformaledu/features/class"
+	contract "myproject/innonformaledu/features/contract"
+	feedback "myproject/innonformaledu/features/feedback"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -28,5 +32,7 @@ func InitMySQLDB(cfg *config.AppConfig) *gorm.DB {
 }
 
 func MigrateDB(db *gorm.DB) {
-
+	db.AutoMigrate(&class.ClassCore{})
+	db.AutoMigrate(&contract.ContractCore{})
+	db.AutoMigrate(&feedback.FeedbackCore{})
 }
