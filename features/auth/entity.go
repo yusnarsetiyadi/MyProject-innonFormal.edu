@@ -5,8 +5,8 @@ import "time"
 type UserCore struct {
 	ID        uint
 	Name      string
-	Email     string `validate:"required,email"`
-	Password  string `validate:"required"`
+	Email     string
+	Password  string
 	Role      string
 	CreatedAt time.Time
 	UpdatedAt time.Time

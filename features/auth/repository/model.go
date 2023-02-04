@@ -9,9 +9,9 @@ import (
 type User struct {
 	gorm.Model
 	Name     string
-	Email    string `validate:"required,email"`
-	Password string `validate:"required"`
-	Role     string `validate:"required"`
+	Email    string
+	Password string
+	Role     string
 }
 
 func (data User) toCore() auth.UserCore {
