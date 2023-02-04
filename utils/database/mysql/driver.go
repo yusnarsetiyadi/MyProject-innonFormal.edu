@@ -9,6 +9,7 @@ import (
 	contract "myproject/innonformaledu/features/contract"
 	feedback "myproject/innonformaledu/features/feedback"
 	joinclass "myproject/innonformaledu/features/joinclass"
+	raport "myproject/innonformaledu/features/raport"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -37,4 +38,5 @@ func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&contract.ContractCore{})
 	db.AutoMigrate(&feedback.FeedbackCore{})
 	db.AutoMigrate(&joinclass.JoinClassCore{})
+	db.AutoMigrate(&raport.RaportCore{})
 }

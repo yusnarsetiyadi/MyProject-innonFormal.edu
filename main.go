@@ -25,7 +25,7 @@ func main() {
 	// features
 	factory.InitFactory(e, db)
 
-	//middleware
+	// middleware
 	middlewares.LogMiddlewares(e)
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
