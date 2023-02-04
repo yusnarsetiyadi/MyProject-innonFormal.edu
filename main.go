@@ -14,12 +14,15 @@ import (
 )
 
 func main() {
+	// config and connection db
 	cfg := config.GetConfig()
 	db := mysql.InitMySQLDB(cfg)
 	// db := postgresql.InitPostgreSQLDB(cfg)
 
+	// echo framework
 	e := echo.New()
 
+	// features
 	factory.InitFactory(e, db)
 
 	//middleware
