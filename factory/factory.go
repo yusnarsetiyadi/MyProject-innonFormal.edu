@@ -37,6 +37,10 @@ import (
 	teacherRepo "myproject/innonformaledu/features/teacher/repository"
 	teacherService "myproject/innonformaledu/features/teacher/service"
 
+	superadminDelivery "myproject/innonformaledu/features/superadmin/delivery"
+	superadminRepo "myproject/innonformaledu/features/superadmin/repository"
+	superadminService "myproject/innonformaledu/features/superadmin/service"
+
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -78,5 +82,9 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	teacherRepoFactory := teacherRepo.New(db)
 	teacherServiceFactory := teacherService.New(teacherRepoFactory)
 	teacherDelivery.New(teacherServiceFactory, e)
+
+	superadminRepoFactory := superadminRepo.New(db)
+	superadminServiceFactory := superadminService.New(superadminRepoFactory)
+	superadminDelivery.New(superadminServiceFactory, e)
 
 }

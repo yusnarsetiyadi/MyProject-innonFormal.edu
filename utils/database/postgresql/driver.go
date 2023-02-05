@@ -12,6 +12,7 @@ import (
 	raport "myproject/innonformaledu/features/raport"
 	schooladministrator "myproject/innonformaledu/features/schooladministrator"
 	student "myproject/innonformaledu/features/student"
+	superadmin "myproject/innonformaledu/features/superadmin"
 	teacher "myproject/innonformaledu/features/teacher"
 
 	"gorm.io/driver/postgres"
@@ -45,4 +46,5 @@ func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&schooladministrator.SchoolAdministratorCore{})
 	db.AutoMigrate(&student.StudentCore{})
 	db.AutoMigrate(&teacher.TeacherCore{})
+	db.AutoMigrate(&superadmin.SuperAdminCore{})
 }
