@@ -10,6 +10,7 @@ import (
 	feedback "myproject/innonformaledu/features/feedback"
 	joinclass "myproject/innonformaledu/features/joinclass"
 	raport "myproject/innonformaledu/features/raport"
+	schooladministrator "myproject/innonformaledu/features/schooladministrator"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -39,4 +40,5 @@ func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&feedback.FeedbackCore{})
 	db.AutoMigrate(&joinclass.JoinClassCore{})
 	db.AutoMigrate(&raport.RaportCore{})
+	db.AutoMigrate(&schooladministrator.SchoolAdministratorCore{})
 }
