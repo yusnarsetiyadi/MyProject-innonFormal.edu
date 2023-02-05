@@ -11,6 +11,7 @@ import (
 	joinclass "myproject/innonformaledu/features/joinclass"
 	raport "myproject/innonformaledu/features/raport"
 	schooladministrator "myproject/innonformaledu/features/schooladministrator"
+	student "myproject/innonformaledu/features/student"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -41,4 +42,5 @@ func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&joinclass.JoinClassCore{})
 	db.AutoMigrate(&raport.RaportCore{})
 	db.AutoMigrate(&schooladministrator.SchoolAdministratorCore{})
+	db.AutoMigrate(&student.StudentCore{})
 }

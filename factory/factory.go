@@ -29,6 +29,10 @@ import (
 	schooladministratorRepo "myproject/innonformaledu/features/schooladministrator/repository"
 	schooladministratorService "myproject/innonformaledu/features/schooladministrator/service"
 
+	studentDelivery "myproject/innonformaledu/features/student/delivery"
+	studentRepo "myproject/innonformaledu/features/student/repository"
+	studentService "myproject/innonformaledu/features/student/service"
+
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -62,5 +66,9 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	schooladministratorRepoFactory := schooladministratorRepo.New(db)
 	schooladministratorServiceFactory := schooladministratorService.New(schooladministratorRepoFactory)
 	schooladministratorDelivery.New(schooladministratorServiceFactory, e)
+
+	studentRepoFactory := studentRepo.New(db)
+	studentServiceFactory := studentService.New(studentRepoFactory)
+	studentDelivery.New(studentServiceFactory, e)
 
 }
