@@ -3,7 +3,7 @@ package teacher
 import "time"
 
 type TeacherCore struct {
-	ID         uint
+	ClassID    uint
 	Name       string
 	Email      string
 	Password   string

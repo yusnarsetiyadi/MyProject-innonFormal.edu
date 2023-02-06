@@ -2,6 +2,7 @@ package repository
 
 import (
 	"myproject/innonformaledu/features/contract"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -12,6 +13,7 @@ type Contract struct {
 	Cost                  uint
 	Portofolio            string
 	ContractImage         string
+	Duration              time.Time
 	TeacherID             uint
 	SchoolAdministratorID uint
 }

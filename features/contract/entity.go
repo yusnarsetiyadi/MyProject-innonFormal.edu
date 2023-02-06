@@ -8,6 +8,7 @@ type ContractCore struct {
 	Cost                  uint
 	Portofolio            string
 	ContractImage         string
+	Duration              time.Time
 	TeacherID             uint
 	SchoolAdministratorID uint
 	CreatedAt             time.Time

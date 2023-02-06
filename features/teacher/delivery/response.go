@@ -6,7 +6,7 @@ import (
 )
 
 type TeacherResponse struct {
-	ID         uint      `json:"id"`
+	ClassID    uint      `json:"class_id"`
 	Name       string    `json:"name"`
 	Email      string    `json:"email"`
 	Password   string    `json:"password"`
@@ -24,7 +24,7 @@ type TeacherResponse struct {
 
 func fromCore(dataCore teacher.TeacherCore) TeacherResponse {
 	return TeacherResponse{
-		ID:         dataCore.ID,
+		ClassID:    dataCore.ClassID,
 		Name:       dataCore.Name,
 		Email:      dataCore.Email,
 		Password:   dataCore.Password,
