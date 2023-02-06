@@ -8,6 +8,7 @@ import (
 
 type Teacher struct {
 	gorm.Model
+	ClassID    uint
 	Name       string
 	Email      string
 	Password   string
@@ -40,7 +41,7 @@ func fromCore(dataCore teacher.TeacherCore) Teacher {
 
 func (dataModel *Teacher) toCore() teacher.TeacherCore {
 	return teacher.TeacherCore{
-		ID:         dataModel.ID,
+		ClassID:    dataModel.ClassID,
 		Name:       dataModel.Name,
 		Email:      dataModel.Email,
 		Password:   dataModel.Password,

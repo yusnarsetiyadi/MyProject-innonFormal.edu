@@ -11,6 +11,7 @@ type ContractResponse struct {
 	Cost                  uint      `json:"cost"`
 	Portofolio            string    `json:"portofolio"`
 	ContractImage         string    `json:"contract_image"`
+	Duration              time.Time `json:"duration"`
 	TeacherID             uint      `json:"teacher_id"`
 	SchoolAdministratorID uint      `json:"school_administrator_id"`
 	CreatedAt             time.Time `json:"created_at"`
@@ -24,6 +25,7 @@ func fromCore(dataCore contract.ContractCore) ContractResponse {
 		Cost:                  dataCore.Cost,
 		Portofolio:            dataCore.Portofolio,
 		ContractImage:         dataCore.ContractImage,
+		Duration:              dataCore.Duration,
 		TeacherID:             dataCore.TeacherID,
 		SchoolAdministratorID: dataCore.SchoolAdministratorID,
 		CreatedAt:             dataCore.CreatedAt,
