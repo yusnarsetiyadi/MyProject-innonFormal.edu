@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"myproject/innonformaledu/config"
-	"myproject/innonformaledu/factory"
-	"myproject/innonformaledu/middlewares"
+	"myproject/innonformaledu/internal/config"
+	"myproject/innonformaledu/internal/factory"
+	"myproject/innonformaledu/internal/middlewares"
 
 	"myproject/innonformaledu/utils/database/mysql"
 	// "myproject/innonformaledu/utils/database/postgresql"
